@@ -26,6 +26,18 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'algorithm' => 'rijndael-128',
                 'secret'    => '%kernel.secret%',
             ],
+            'commands' => [
+                'enabled' => false,
+                'queue_name_resolver' => 'fixed',
+                'queue_name' => 'asynchronous_commands',
+                'queues_map' => []
+            ],
+            'events' => [
+                'enabled' => false,
+                'queue_name_resolver' => 'fixed',
+                'queue_name' => 'asynchronous_events',
+                'queues_map' => []
+            ]
         ]);
     }
 
@@ -45,6 +57,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'queue_name_resolver' => 'fixed',
                 'queue_name' => 'my-queue-name',
                 'queues_map' => [],
+                'enabled' => true,
             ],
         ], $type);
     }
@@ -66,6 +79,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     'queue_name_resolver' => 'fixed',
                     'queue_name' => sprintf('asynchronous_%s', $type),
                     'queues_map' => [],
+                    'enabled' => true,
                 ],
             ], $type);
         }
@@ -87,6 +101,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'queues_map' => [
                     'MyBundle\GenerateThumbnail' => 'heavy_lifting',
                 ],
+                'enabled' => true,
             ],
         ];
 
@@ -97,6 +112,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'queues_map' => [
                     'MyBundle\GenerateThumbnail' => 'heavy_lifting',
                 ],
+                'enabled' => true,
             ],
         ], $type);
     }
@@ -121,6 +137,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'queue_name_resolver' => 'class_based',
                 'queue_name' => 'asynchronous_'.$type,
                 'queues_map' => [],
+                'enabled' => true,
             ],
         ], $type);
     }
@@ -145,6 +162,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'queue_name_resolver' => 'my.service.id',
                 'queue_name' => 'asynchronous_'.$type,
                 'queues_map' => [],
+                'enabled' => true,
             ],
         ], $type);
     }

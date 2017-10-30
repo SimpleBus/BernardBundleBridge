@@ -32,7 +32,7 @@ class SimpleBusBernardBundleBridgeExtension extends ConfigurableExtension implem
         $config = $container->getExtensionConfig($this->getAlias());
         $merged = $this->processConfiguration($this->getConfiguration($config, $container), $config);
 
-        if (isset($merged['commands'])) {
+        if ($merged['commands']['enabled']) {
             $container->prependExtensionConfig('simple_bus_asynchronous', [
                 'commands' => [
                     'publisher_service_id' => 'simple_bus.bernard_bundle_bridge.command_publisher',
@@ -40,7 +40,7 @@ class SimpleBusBernardBundleBridgeExtension extends ConfigurableExtension implem
             ]);
         }
 
-        if (isset($merged['events'])) {
+        if ($merged['events']['enabled']) {
             $container->prependExtensionConfig('simple_bus_asynchronous', [
                 'events' => [
                     'publisher_service_id' => 'simple_bus.bernard_bundle_bridge.event_publisher',
@@ -55,7 +55,7 @@ class SimpleBusBernardBundleBridgeExtension extends ConfigurableExtension implem
         $loader->load('routing.xml');
 
         foreach (['events', 'commands'] as $type) {
-            if (isset($config[$type])) {
+            if ($config[$type]['enabled']) {
                 $loader->load($type.'.xml');
                 $this->configureQueueResolverForType($config[$type], $container, $type);
             }

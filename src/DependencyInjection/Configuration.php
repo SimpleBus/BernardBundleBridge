@@ -58,11 +58,13 @@ class Configuration implements ConfigurationInterface
             return [
                 'queue_name_resolver' => 'fixed',
                 'queue_name' => $queueName,
+                'enabled' => true,
             ];
         };
 
         $node = $treeBuilder->root($type);
         $node
+            ->canBeEnabled()
             ->beforeNormalization()
                 ->ifString()
                 ->then($defaults)
